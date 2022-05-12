@@ -1,0 +1,68 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .App {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px;
+    flex-direction: row;
+  }
+  
+  .view1 {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 10px;
+    width: 75%;
+  }
+  
+  .view2 {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    padding: 10px;
+    flex-direction: column;
+    width: 25%;
+  }
+  
+  .introbox {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+  }
+  
+  .votesbox{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    width:100%;
+  }
+  
+  .chart {
+    background-color: #f1f1f1;
+    padding: 10px;
+    flex: 80%;
+  }
+  
+  .votescount {
+    background-color: dodgerblue;
+    padding: 10px;
+    flex: 20%;
+    max-height: 90px;
+  }
+  
+  .sliderbox {
+    width: 100%;
+    align-items: left;
+  }
+  
+  .slider {
+    width: 80%;
+    padding: 10px;
+  }
