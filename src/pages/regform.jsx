@@ -1,6 +1,20 @@
 import './regform.css';
+import Cookies from 'universal-cookie';
+import React, { useState } from "react";
 
 function RegForm() {
+  const cookies = new Cookies();
+  const [userEmail, setUserEmail] = useState(cookies.get('userEmail'));
+
+  function submitForm(e){
+    cookies.set('userEmail', userEmail, { path: '/' });
+  }
+
+  function handleEmailChange(e){
+    // ToDo: validate email pattern.
+    setUserEmail(e.target.value)
+  }
+
   return (
     <div dir="rtl">
       <form>
@@ -11,7 +25,7 @@ function RegForm() {
         </label>
         <label>
           ایمیل: &nbsp; 
-          <input type="email" name="email" />
+          <input type="email" name="email" value={userEmail} onChange={handleEmailChange} />
         </label>
         <label>
           تحصیلات: &nbsp;
@@ -52,7 +66,7 @@ function RegForm() {
             <input type="checkbox" name="studied-pearsoncorr" />
           </label>
         </fieldset>
-        <button type="submit">ثبت</button>
+        <button type="submit" onClick={submitForm}>ثبت</button>
       </form>
       <a class="button" href='/2'>بعدی</a>
     </div>

@@ -3,9 +3,12 @@ import './test.css';
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
+import Cookies from 'universal-cookie';
 
 
-const arr = [33, 53, 85, 41, 44, 40, 5, 6, 34, 90, 100, 12, 60, 50, 80, 30, 10, 120, 90, 60, 70, 20, 19];
+
+//const arr = [33, 53, 85, 41, 44, 40, 5, 6, 34, 90, 100, 12, 60, 50, 80, 30, 10, 120, 90, 60, 70, 20, 19];
+const arr = [1,1,1,1,1,33, 38, 50, 83, 89, 92, 120, 122, 130, 140, 148, 12, 60, 50, 80, 30, 10, 120, 90, 60, 70, 20, 19];
 
 const options = {
   scales : {
@@ -25,6 +28,7 @@ const options = {
 function Demo() {
   const [rangeval, setRangeval] = useState(null);
   const [visibledata, setVisibledata] = useState(arr.slice(0,10));
+  const cookies = new Cookies();
 
   const chartdata = {
     labels: ["00:00", "00:06", "00:12", "00:18", "00:24", "00:30", "00:36", "01:02", "01:08", "01:14"],
@@ -46,6 +50,7 @@ function Demo() {
 
   return (
     <div className="App">
+      <h1>{ cookies.get('userEmail') }</h1>
       <div class="view1">
       <div class="votesbox">
       <div class="chart">
