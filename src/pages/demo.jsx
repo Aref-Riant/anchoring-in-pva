@@ -5,15 +5,29 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
 
 
-const arr = [33, 53, 85, 41, 44, 40, 5, 6, 34, 90, 100, 12, 60, 50, 80];
+const arr = [33, 53, 85, 41, 44, 40, 5, 6, 34, 90, 100, 12, 60, 50, 80, 30, 10, 120, 90, 60, 70, 20, 19];
 
+const options = {
+  scales : {
+      y : {
+          min: 0,
+          max: 150,
+          ticks: {
+            stepSize: 10
+        }
+      }
+  },
+  animation: {
+    duration: 50
+  }
+}
 
 function Demo() {
   const [rangeval, setRangeval] = useState(null);
-  const [visibledata, setVisibledata] = useState(arr.slice(0,6));
+  const [visibledata, setVisibledata] = useState(arr.slice(0,10));
 
   const chartdata = {
-    labels: ["00:00", "00:06", "00:12", "00:18", "00:24", "00:30"],
+    labels: ["00:00", "00:06", "00:12", "00:18", "00:24", "00:30", "00:36", "01:02", "01:08", "01:14"],
     datasets: [
       {
         label: "شمارش آرا",
@@ -27,10 +41,7 @@ function Demo() {
 
   function handleChange(event) {
     setRangeval(event.target.value);
-    setVisibledata(arr.slice(event.target.value, parseInt(event.target.value) + 6));
-    console.log(event.target.value);
-    console.log(parseInt(event.target.value) + 6);
-    console.log(visibledata)
+    setVisibledata(arr.slice(event.target.value, parseInt(event.target.value) + 10));
   }
 
   return (
@@ -38,7 +49,7 @@ function Demo() {
       <div class="view1">
       <div class="votesbox">
       <div class="chart">
-          <Line data={chartdata} />
+          <Line data={chartdata} options={options} />
       </div>
       <div class="votescount">
         last count: &nbsp;
