@@ -5,40 +5,52 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
 
 
-
-const data = {
-  labels: ["00:00", "00:06", "00:12", "00:18", "00:24", "00:30"],
-  datasets: [
-    {
-      label: "شمارش آرا",
-      data: [33, 53, 85, 41, 44, 40],
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    }
-  ]
-};
+const arr = [33, 53, 85, 41, 44, 40, 5, 6, 34, 90, 100, 12, 60, 50, 80];
 
 
 function Demo() {
   const [rangeval, setRangeval] = useState(null);
+  const [visibledata, setVisibledata] = useState(arr.slice(0,6));
+
+  const chartdata = {
+    labels: ["00:00", "00:06", "00:12", "00:18", "00:24", "00:30"],
+    datasets: [
+      {
+        label: "شمارش آرا",
+        data: visibledata,
+        fill: true,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)"
+      }
+    ]
+  }
+
+  function handleChange(event) {
+    setRangeval(event.target.value);
+    setVisibledata(arr.slice(event.target.value, parseInt(event.target.value) + 6));
+    console.log(event.target.value);
+    console.log(parseInt(event.target.value) + 6);
+    console.log(visibledata)
+  }
+
   return (
     <div className="App">
       <div class="view1">
       <div class="votesbox">
       <div class="chart">
-          <Line data={data} />
+          <Line data={chartdata} />
       </div>
       <div class="votescount">
-        250
+        last count: &nbsp;
+        { visibledata[visibledata.length - 1] }
       </div>
       </div>
       <div class="introbox">
       <div class="sliderbox">
         <div class="slider">
       <input type="range" min="1" step="1" max="100" 
-      onChange={(event) => setRangeval(event.target.value)}
-      class="slider" id="myRange" />
+      onChange={handleChange}
+      class="slider" id="myRange" value={rangeval} />
       </div>
       </div>
       <br></br>
