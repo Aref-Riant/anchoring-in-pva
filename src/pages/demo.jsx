@@ -4,6 +4,7 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart }            from 'react-chartjs-2'
 import Cookies from 'universal-cookie';
+import { useEffect } from "react/cjs/react.production.min";
 
 
 
@@ -26,9 +27,23 @@ const options = {
 }
 
 function Demo() {
-  const [rangeval, setRangeval] = useState(null);
+  const [rangeval, setRangeval] = useState(0);
   const [visibledata, setVisibledata] = useState(arr.slice(0,10));
+  const startTime = new Date();
+ 
   const cookies = new Cookies();
+
+  const [timePast, setTimePast] = useState(new Date() - startTime);
+
+ // useEffect(() => {
+  //  setTimeout(() => {
+   //   setTimePast(new Date() - startTime);
+    //}, 1000);
+  //});
+
+  setTimeout(() => {
+  setTimePast(new Date() - startTime);
+  }, 500);
 
   const chartdata = {
     labels: ["00:00", "00:06", "00:12", "00:18", "00:24", "00:30", "00:36", "01:02", "01:08", "01:14"],
@@ -83,9 +98,9 @@ function Demo() {
 
       <div class="view2">
         <div class="timer">
-          03:01
+          { Math.floor((timePast / 1000 / 60) % 60) }:{ Math.floor((timePast / 1000) % 60) }
         </div>
-        <div className="stop-btn">
+        <div class="stop-btn">
           <button disabled>Stop</button>
         </div>
         <div class="guess-input">
