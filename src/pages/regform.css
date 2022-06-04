@@ -1,0 +1,11 @@
+.regform{
+    width: 30%;
+    height: 90%;
+}
+@media only screen and (max-width: 600px) {
+  .regform {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+}
