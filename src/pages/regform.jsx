@@ -30,7 +30,7 @@ function isEmail(val) {
       className="regform container border d-flex flex-column align-items-center justify-content-center my-3 
         shadow-lg p-3 mb-5 bg-body rounded"
     >
-      <form class="my-3 mx-1">
+      <form class="my-3 mx-1 formClass" >
         <div class="my-3 ">
           <label for="exampleInputEmail1" class="form-label">
             نام و نام خانوادگی: &nbsp;
