@@ -16,7 +16,7 @@
     flex-wrap: wrap;
     text-align: center;
     padding: 10px;
-    width: 75%;
+    width: 90vw;
   }
   
   .view2 {
@@ -63,6 +63,15 @@
   }
   
   .slider {
-    width: 80%;
+    margin-top: 15px;
+    width: 85vw;
     padding: 10px;
+  }
+
+  .slider_position{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 5px;
+    opacity: .7;
   }

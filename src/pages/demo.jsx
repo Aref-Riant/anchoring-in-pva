@@ -128,14 +128,13 @@ function Demo() {
   
 
   return (
-    <div className="App">
-      <h1>{cookies.get("userEmail")}</h1>
+    <div className="App d-flex flex-column align-items-center justify-content-center ">
       <div className="view1">
         <div className="votesbox">
           <div className="chart">
             <Line data={chartdata} options={options} />
           </div>
-          <div className="votescount">
+          <div className="votescount slider_position">
             last count: &nbsp;
             {visibledata[visibledata.length - 1]}
           </div>
@@ -150,16 +149,15 @@ function Demo() {
                   step="1"
                   max="360"
                   onChange={(e) => {
-                  if (e.target.value <= timeRef.current) {
-                    setRangeval(e.target.value);
-                    clearInterval(intervalRef.current);
-                    setTimeout(() => {
-                      console.log(e.target.value);
-                      setRangeval(timeRef.current);
-                      setFlag(!flag);
-                    }, 4000);
-                  }
-                  
+                    if (e.target.value <= timeRef.current) {
+                      setRangeval(e.target.value);
+                      clearInterval(intervalRef.current);
+                      setTimeout(() => {
+                        console.log(e.target.value);
+                        setRangeval(timeRef.current);
+                        setFlag(!flag);
+                      }, 4000);
+                    }
                   }}
                   className="slider"
                   id="myRange"
@@ -184,14 +182,25 @@ function Demo() {
 
       <div className="view2">
         <div className="timer" ref={timerElementRef} />
-          
+
         <div className="stop-btn">
-         
-          <button onClick={() =>clearInterval(intervalRef.current )} >Stop</button>
+          <button onClick={() => clearInterval(intervalRef.current)}>
+            Stop
+          </button>
         </div>
-        <div className="guess-input">
-          <input type="text" pattern="[0-9]*" disabled />
-          <input type="submit" disabled />
+        <div className="guess-input my-3">
+          <input
+            type="text"
+            pattern="[0-9]*"
+            disabled={timeRef.current > 239 ? false : true}
+          />
+          <br />
+        </div>
+        <div style={{  display: "flex", justifyContent: "center" }}>
+          <input
+            type="submit"
+            disabled={timeRef.current > 239 ? false : true}
+          />
         </div>
 
         <a href="/3" className="button">

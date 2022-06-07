@@ -16,7 +16,7 @@
   flex-wrap: wrap;
   text-align: center;
   padding: 10px;
-  width: 75%;
+  width: 100vw;
 }
 
 .view2 {
@@ -33,21 +33,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width:100%;
+  width: 100%;
 }
 
-.votesbox{
+.votesbox {
   flex-grow: 1;
   display: flex;
   flex-direction: row;
   align-items: top;
-  width:100%;
+  width: 100%;
 }
 
 .chart {
   background-color: #f1f1f1;
   padding: 10px;
   flex: 80%;
+  width: 90vw;
 }
 
 .votescount {
