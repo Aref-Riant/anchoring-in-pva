@@ -128,7 +128,9 @@ function Demo() {
   
 
   return (
-    <div className="App d-flex flex-column align-items-center justify-content-center ">
+
+    <div className="App">
+
       <div className="view1">
         <div className="votesbox">
           <div className="chart">
