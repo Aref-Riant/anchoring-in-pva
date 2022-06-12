@@ -129,7 +129,6 @@ function Demo() {
 
   return (
     <div className="App">
-      <h1>{cookies.get("userEmail")}</h1>
       <div className="view1">
         <div className="votesbox">
           <div className="chart">
