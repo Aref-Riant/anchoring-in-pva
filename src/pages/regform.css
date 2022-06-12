@@ -1,13 +1,14 @@
 .regform {
-  width: 30%;
+  width: 40%;
   height: 90%;
 }
-@media only screen and (max-width: 800px) {
+
+@media only screen and (max-width: 1100px) {
   .regform {
     width: 100vw;
     margin: 0 auto;
   }
   .formClass{
-    width: 90vw;
+    width: 90%;
   }
 }
