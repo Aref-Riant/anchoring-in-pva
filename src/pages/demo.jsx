@@ -22,12 +22,10 @@ const options = {
         stepSize: 10,
       },
     },
-    
   },
   animation: {
     duration: 50,
   },
- 
 };
 
 function Demo() {
@@ -50,58 +48,45 @@ function Demo() {
     "00:54",
   ]);
 
-  
-
   const [time, setTime] = useState(1);
   const [stopTimer, setStopTimer] = useState(false);
-  const [flag,setFlag]=useState(true);
+  const [flag, setFlag] = useState(true);
   const intervalRef = useRef();
   useEffect(() => {
     // render time
     let temp = label;
-      const interval = setInterval(() => {
-        timeRef.current += 1;
-        //display new time
-        //set label state to 6 sec more than before
-       
-        if (timeRef.current % 6 === 0) {
-          
+    const interval = setInterval(() => {
+      timeRef.current += 1;
+      //display new time
+      //set label state to 6 sec more than before
 
-          temp=temp.slice(1);
-          console.log(temp);
-          temp.push(time_convert(timeRef.current+54));
-          setLabel(temp)
-          // console.log(temp, timeRef.current);
-          if (timeRef.current < 241) setRangeval((prev) => prev + 1);
-       
-        }
-          timerElementRef.current.innerText = time_convert(timeRef.current);
-          if (timeRef.current > 239) setStopTimer(true);
-        
-        // console.log(rangeval);
-      }, 1000);
-      intervalRef.current = interval;
-      console.log(intervalRef.current);
+      if (timeRef.current % 6 === 0) {
+        temp = temp.slice(1);
+        console.log(temp);
+        temp.push(time_convert(timeRef.current + 54));
+        setLabel(temp);
+        // console.log(temp, timeRef.current);
+        if (timeRef.current < 241) setRangeval((prev) => prev + 1);
+      }
+      timerElementRef.current.innerText = time_convert(timeRef.current);
+      if (timeRef.current > 239) setStopTimer(true);
 
-      
+      // console.log(rangeval);
+    }, 1000);
+    intervalRef.current = interval;
+    console.log(intervalRef.current);
 
-      return () => {
-        clearInterval(interval);
-      };
-    
-    
-
-    
+    return () => {
+      clearInterval(interval);
+    };
   }, [flag]);
-// set useEffect and interval that genereate a list in 6 sec interval
-
-
+  // set useEffect and interval that genereate a list in 6 sec interval
 
   // console.log(time);
   useEffect(() => {
     if (stopTimer) {
       console.log("clearing", { intervalRef });
-      clearInterval(intervalRef.current );
+      clearInterval(intervalRef.current);
     }
   }, [stopTimer]);
 
@@ -118,25 +103,23 @@ function Demo() {
     ],
   };
   function time_convert(num) {
-  
+    let hours =
+      Math.floor(num / 60) < 10
+        ? "0" + Math.floor(num / 60)
+        : Math.floor(num / 60);
+    let minutes = num % 60 ? (num % 60 < 10 ? "0" + (num % 60) : num % 60) : 0;
 
-  let hours = Math.floor(num / 60)<10? "0"+Math.floor(num / 60):Math.floor(num / 60);
-  let minutes = num % 60? num % 60<10? "0"+num % 60:num % 60:0;
-  
-  return hours + ":" + minutes;
-}
-  
+    return hours + ":" + minutes;
+  }
 
   return (
-
     <div className="App">
-
       <div className="view1">
         <div className="votesbox">
           <div className="chart">
             <Line data={chartdata} options={options} />
           </div>
-          <div className="votescount slider_position">
+          <div className="votescount slider_position bg-info">
             last count: &nbsp;
             {visibledata[visibledata.length - 1]}
           </div>
@@ -185,33 +168,39 @@ function Demo() {
       <div className="view2">
         <div className="timer" ref={timerElementRef} />
 
-        <div className="stop-btn">
-          <button onClick={() => clearInterval(intervalRef.current)}>
+        <div>
+          <button
+            className="btn btn-secondary btn-lg mb-3"
+            onClick={() => clearInterval(intervalRef.current)}
+          >
             Stop
           </button>
+          <br />
         </div>
-        <div className="guess-input my-3">
+        <div className="guess-input my-1">
           <input
+            placeholder={`please enter your guess ${timeRef.current < 239 ? `after ${239 - timeRef.current} sec`:""}`}
+            class="form-control"
             type="text"
             pattern="[0-9]*"
             disabled={timeRef.current > 239 ? false : true}
           />
-          <br />
         </div>
-        <div style={{  display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <input
+            placeholder={`please enter your guess`}
+            className="btn btn-primary btn-lg"
             type="submit"
             disabled={timeRef.current > 239 ? false : true}
           />
         </div>
-
-        <a href="/3" className="button">
+        <br />
+        <button type="button" class="btn btn-outline-primary my-2">
           شروع آزمون
-        </a>
-        <p></p>
-        <a href="/2-training" className="button">
+        </button>
+        <button type="button" class="btn btn-outline-success">
           Trainig (for train group)
-        </a>
+        </button>
       </div>
     </div>
   );
@@ -223,4 +212,3 @@ export default Demo;
 //2.show 10 datapoints to user every second
 //3.user can guess the number of votes
 //4.user can guess the number of votes in 6 minutes
-
