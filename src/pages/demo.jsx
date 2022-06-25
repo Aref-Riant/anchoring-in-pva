@@ -5,13 +5,14 @@ import { Chart as ChartJS } from "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 import Cookies from "universal-cookie";
 import { useRef } from "react";
-
+import axios from "axios";
 //const arr = [33, 53, 85, 41, 44, 40, 5, 6, 34, 90, 100, 12, 60, 50, 80, 30, 10, 120, 90, 60, 70, 20, 19];
-const arr = [
-  1, 1, 1, 1, 1, 33, 38, 50, 83, 89, 92, 120, 122, 130, 140, 148, 12, 60, 50,
-  80, 30, 10, 120, 90, 60, 70, 20, 19, 80, 30, 10, 120, 90, 60, 70, 20, 19, 80,
-  30, 10, 120, 90, 60, 70, 20, 19, 80, 30, 10, 120, 90, 60, 70, 20, 19,
-];
+// const arr = [
+//   1, 1, 1, 1, 1, 33, 38, 50, 83, 89, 92, 120, 122, 130, 140, 148, 12, 60, 50,
+//   80, 30, 10, 120, 90, 60, 70, 20, 19, 80, 30, 10, 120, 90, 60, 70, 20, 19, 80,
+//   30, 10, 120, 90, 60, 70, 20, 19, 80, 30, 10, 120, 90, 60, 70, 20, 19,
+// ];
+
 
 const options = {
   scales: {
@@ -30,11 +31,76 @@ const options = {
 
 function Demo() {
   const [rangeval, setRangeval] = useState(0);
-  const visibledata = arr.slice(rangeval, rangeval + 10);
+  const [flag1, setFlag1] = useState(false);
+  //const visibledata = arr.slice(rangeval, rangeval + 10);
+  const [visibledata, setVisibledata] = useState([]);
+  const [guess, setGuess] = useState(0);
   const timeRef = useRef(0);
   const timerElementRef = useRef();
   const cookies = new Cookies();
+  const [arr, setArr] = useState();
+  
+  const onSubmit = () => {
 
+var data = JSON.stringify({
+  guess: guess,
+  guess_time: rangeval,
+});
+
+var config = {
+  method: "post",
+  url: "http://217.182.11.251/testresult/",
+  headers: {
+    email: cookies.get("userEmail"),
+    "Content-Type": "application/json",
+  },
+  data: data,
+};
+
+axios(config)
+  .then(function (response) {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+   }
+
+
+
+
+  useEffect(() => { 
+
+var config = {
+  method: "get",
+  url: "http://217.182.11.251/getdata/",
+  headers: {
+    email: cookies.get("userEmail"),
+  },
+};
+
+    
+    
+axios(config)
+  .then(function (response) {
+    console.log(response.data.list.split(",").map(item => +(item)));
+    setArr(response.data.list.split(",").map(item => +(item)));
+    setFlag1(response.data.train);
+    
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+
+  }, []);
+
+  useEffect(() => {
+    console.log("hhh")
+  if(arr && arr.length>0){  setVisibledata(arr.slice(rangeval, rangeval + 10));}
+  }, [rangeval]);
   const [label, setLabel] = useState([
     "00:00",
     "00:06",
@@ -66,7 +132,11 @@ function Demo() {
         temp.push(time_convert(timeRef.current + 54));
         setLabel(temp);
         // console.log(temp, timeRef.current);
-        if (timeRef.current < 241) setRangeval((prev) => prev + 1);
+        if (timeRef.current < 241) {
+          setRangeval((prev) => prev + 1)
+         
+          
+        };
       }
       timerElementRef.current.innerText = time_convert(timeRef.current);
       if (timeRef.current > 239) setStopTimer(true);
@@ -117,6 +187,7 @@ function Demo() {
       <div className="view1">
         <div className="votesbox">
           <div className="chart">
+            <div>{cookies.get("userEmail")}</div>
             <Line data={chartdata} options={options} />
           </div>
           <div className="votescount slider_position bg-info">
@@ -179,10 +250,13 @@ function Demo() {
         </div>
         <div className="guess-input my-1">
           <input
-            placeholder={`please enter your guess ${timeRef.current < 239 ? `after ${239 - timeRef.current} sec`:""}`}
+            onChange={(e) => setGuess(e.target.value)}
+            placeholder={`please enter your guess ${
+              timeRef.current < 239 ? `after ${239 - timeRef.current} sec` : ""
+            }`}
             class="form-control"
-            type="text"
-            pattern="[0-9]*"
+            type="number"
+            
             disabled={timeRef.current > 239 ? false : true}
           />
         </div>
@@ -191,6 +265,7 @@ function Demo() {
             placeholder={`please enter your guess`}
             className="btn btn-primary btn-lg"
             type="submit"
+            onClick={ onSubmit }
             disabled={timeRef.current > 239 ? false : true}
           />
         </div>
