@@ -13,25 +13,10 @@ import axios from "axios";
 //   30, 10, 120, 90, 60, 70, 20, 19, 80, 30, 10, 120, 90, 60, 70, 20, 19,
 // ];
 
-
-const options = {
-  scales: {
-    y: {
-      min: 0,
-      max: 150,
-      ticks: {
-        stepSize: 10,
-      },
-    },
-  },
-  animation: {
-    duration: 50,
-  },
-};
-
 function Demo() {
   const [rangeval, setRangeval] = useState(0);
   const [flag1, setFlag1] = useState(false);
+  const [train, setTrain] = useState(false);
   //const visibledata = arr.slice(rangeval, rangeval + 10);
   const [visibledata, setVisibledata] = useState([]);
   const [guess, setGuess] = useState(0);
@@ -39,67 +24,81 @@ function Demo() {
   const timerElementRef = useRef();
   const cookies = new Cookies();
   const [arr, setArr] = useState();
-  
+  const [max, setMax] = useState(150);
+  const options = {
+    scales: {
+      y: {
+        min: 0,
+        max,
+        ticks: {
+          stepSize: 10,
+        },
+      },
+    },
+    animation: {
+      duration: 50,
+    },
+  };
   const onSubmit = () => {
+    var data = JSON.stringify({
+      guess: guess,
+      guess_time: rangeval,
+    });
 
-var data = JSON.stringify({
-  guess: guess,
-  guess_time: rangeval,
-});
+    var config = {
+      method: "post",
+      url: "http://217.182.11.251/testresult/",
+      headers: {
+        email: cookies.get("userEmail"),
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
 
-var config = {
-  method: "post",
-  url: "http://217.182.11.251/testresult/",
-  headers: {
-    email: cookies.get("userEmail"),
-    "Content-Type": "application/json",
-  },
-  data: data,
-};
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
-axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+  useEffect(() => {
+    var config = {
+      method: "get",
+      url: "http://217.182.11.251/getdata/",
+      headers: {
+        email: cookies.get("userEmail"),
+      },
+    };
 
-   }
-
-
-
-
-  useEffect(() => { 
-
-var config = {
-  method: "get",
-  url: "http://217.182.11.251/getdata/",
-  headers: {
-    email: cookies.get("userEmail"),
-  },
-};
-
-    
-    
-axios(config)
-  .then(function (response) {
-    console.log(response.data.list.split(",").map(item => +(item)));
-    setArr(response.data.list.split(",").map(item => +(item)));
-    setFlag1(response.data.train);
-    
-    console.log(response.data);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
-
+    axios(config)
+      .then(function async(response) {
+        console.log(response.data.list.split(",").map((item) => +item));
+        setArr(response.data.list.split(",").map((item) => +item));
+        setMax(
+          +response.data.list.split(",")[
+            response.data.list.split(",").length - 1
+          ]
+        );
+        setTrain(response.data.train);
+        setTrain(true);
+        setTime(response.data.train ? 2 : 6);
+        setTime(2);
+        console.log(response.data);
+        setFlag(!flag);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
 
   useEffect(() => {
-    console.log("hhh")
-  if(arr && arr.length>0){  setVisibledata(arr.slice(rangeval, rangeval + 10));}
+    console.log("hhh");
+    if (arr && arr.length > 0) {
+      setVisibledata(arr.slice(rangeval, rangeval + 10));
+    }
   }, [rangeval]);
   const [label, setLabel] = useState([
     "00:00",
@@ -114,7 +113,7 @@ axios(config)
     "00:54",
   ]);
 
-  const [time, setTime] = useState(1);
+  const [time, setTime] = useState(6);
   const [stopTimer, setStopTimer] = useState(false);
   const [flag, setFlag] = useState(true);
   const intervalRef = useRef();
@@ -126,17 +125,16 @@ axios(config)
       //display new time
       //set label state to 6 sec more than before
 
-      if (timeRef.current % 6 === 0) {
+      if (timeRef.current % time === 0) {
+        console.log(time, "tiem");
         temp = temp.slice(1);
         console.log(temp);
         temp.push(time_convert(timeRef.current + 54));
         setLabel(temp);
         // console.log(temp, timeRef.current);
         if (timeRef.current < 241) {
-          setRangeval((prev) => prev + 1)
-         
-          
-        };
+          setRangeval((prev) => prev + 1);
+        }
       }
       timerElementRef.current.innerText = time_convert(timeRef.current);
       if (timeRef.current > 239) setStopTimer(true);
@@ -186,8 +184,8 @@ axios(config)
     <div className="App">
       <div className="view1">
         <div className="votesbox">
-          <div className="chart">
-            <div>{cookies.get("userEmail")}</div>
+          <div className="chart" style={!train ? { flex: "50%" } : {}}>
+            {/* <div>{cookies.get("userEmail")}</div> */}
             <Line data={chartdata} options={options} />
           </div>
           <div className="votescount slider_position bg-info">
@@ -197,7 +195,7 @@ axios(config)
         </div>
         <div className="introbox">
           <div className="sliderbox">
-            <div className="slider">
+            <div className="slider" style={!train ? { display: "flex" } : {}}>
               {rangeval && (
                 <input
                   type="range"
@@ -223,16 +221,6 @@ axios(config)
             </div>
           </div>
           <br></br>
-          <div className="intro">
-            <h5>
-              در این آزمون, داده های یک رای گیری فرضی 6 دقیقه ای بر روی نمودار
-              مشاهده خواهد شد هر 6 ثانیه, مجموع آرای اخذ شده تا آن لحظه بر روی
-              نمودار و باکس گوشه بالا سمت راست نمودار نمایش داده خواهد شده از
-              شرکت کننده خواسته میشود تا قبل از گذر 4 دقیقه از رای گیری, از داده
-              های مشاهده شده مجموع تعداد آرا را تخمین زده و در جعبه سمت راست
-              وارد نماید.
-            </h5>
-          </div>
         </div>
       </div>
 
@@ -256,8 +244,7 @@ axios(config)
             }`}
             class="form-control"
             type="number"
-            
-            disabled={timeRef.current > 239 ? false : true}
+            disabled={!train ? (timeRef.current > 239 ? false : true) : true}
           />
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -265,8 +252,8 @@ axios(config)
             placeholder={`please enter your guess`}
             className="btn btn-primary btn-lg"
             type="submit"
-            onClick={ onSubmit }
-            disabled={timeRef.current > 239 ? false : true}
+            onClick={onSubmit}
+            disabled={!train ? (timeRef.current > 239 ? false : true) : true}
           />
         </div>
         <br />
@@ -276,6 +263,23 @@ axios(config)
         <button type="button" class="btn btn-outline-success">
           Trainig (for train group)
         </button>
+      </div>
+      <div
+        className="intro"
+        style={{ width: "100vw", display: "flex", justifyContent: "center" }}
+      >
+        {!train ? (
+          <h5>trian show </h5>
+        ) : (
+          <h5>
+            در این آزمون, داده های یک رای گیری فرضی 6 دقیقه ای بر روی نمودار
+            مشاهده خواهد شد هر 6 ثانیه, مجموع آرای اخذ شده تا آن لحظه بر روی
+            نمودار و باکس گوشه بالا سمت راست نمودار نمایش داده خواهد شده از شرکت
+            کننده خواسته میشود تا قبل از گذر 4 دقیقه از رای گیری, از داده های
+            مشاهده شده مجموع تعداد آرا را تخمین زده و در جعبه سمت راست وارد
+            نماید.
+          </h5>
+        )}
       </div>
     </div>
   );
