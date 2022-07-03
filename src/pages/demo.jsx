@@ -75,7 +75,7 @@ function Demo() {
 
     axios(config)
       .then(function async(response) {
-        console.log(response.data.list.split(",").map((item) => +item));
+        // console.log(response.data.list.split(",").map((item) => +item));
         setArr(response.data.list.split(",").map((item) => +item));
         setMax(
           +response.data.list.split(",")[
@@ -83,9 +83,9 @@ function Demo() {
           ]
         );
         setTrain(response.data.train);
-        setTrain(true);
+        //setTrain(true);
         setTime(response.data.train ? 2 : 6);
-        setTime(2);
+        //setTime(2);
         console.log(response.data);
         setFlag(!flag);
       })
@@ -95,7 +95,7 @@ function Demo() {
   }, []);
 
   useEffect(() => {
-    console.log("hhh");
+    //console.log("hhh");
     if (arr && arr.length > 0) {
       setVisibledata(arr.slice(rangeval, rangeval + 10));
     }
@@ -126,9 +126,9 @@ function Demo() {
       //set label state to 6 sec more than before
 
       if (timeRef.current % time === 0) {
-        console.log(time, "tiem");
+        //console.log(time, "tiem");
         temp = temp.slice(1);
-        console.log(temp);
+        //console.log(temp);
         temp.push(time_convert(timeRef.current + 54));
         setLabel(temp);
         // console.log(temp, timeRef.current);
@@ -184,7 +184,7 @@ function Demo() {
     <div className="App">
       <div className="view1">
         <div className="votesbox">
-          <div className="chart" style={!train ? { flex: "50%" } : {}}>
+          <div className="chart" style={train ? { flex: "50%" } : {}}>
             {/* <div>{cookies.get("userEmail")}</div> */}
             <Line data={chartdata} options={options} />
           </div>
@@ -195,7 +195,7 @@ function Demo() {
         </div>
         <div className="introbox">
           <div className="sliderbox">
-            <div className="slider" style={!train ? { display: "flex" } : {}}>
+            <div className="slider" style={train ? { display: "flex" } : {}}>
               {rangeval && (
                 <input
                   type="range"
@@ -249,7 +249,7 @@ function Demo() {
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <input
-            placeholder={`please enter your guess`}
+            name="Submit"
             className="btn btn-primary btn-lg"
             type="submit"
             onClick={onSubmit}
@@ -260,15 +260,13 @@ function Demo() {
         <button type="button" class="btn btn-outline-primary my-2">
           شروع آزمون
         </button>
-        <button type="button" class="btn btn-outline-success">
-          Trainig (for train group)
-        </button>
+        
       </div>
       <div
         className="intro"
         style={{ width: "100vw", display: "flex", justifyContent: "center" }}
       >
-        {!train ? (
+        {train ? (
           <h5>trian show </h5>
         ) : (
           <h5>

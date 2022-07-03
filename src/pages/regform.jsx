@@ -70,14 +70,17 @@ function isEmail(val) {
       className="regform container border d-flex flex-column align-items-center justify-content-center my-3 
         shadow-lg p-3 mb-5 bg-body rounded"
     >
-      <form class="my-3 mx-1 formClass" >
+      <form class="my-3 mx-1 formClass">
         <div class="my-3 ">
           <label for="exampleInputEmail1" class="form-label">
             نام و نام خانوادگی: &nbsp;
           </label>
-          <input onChange={e => setForm(
-            {...form, name: e.target.value}
-          )} type="text" class="form-control" id="exampleInputEmail1" />
+          <input
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+          />
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">
@@ -85,11 +88,10 @@ function isEmail(val) {
           </label>
           <input
             type="email"
-            onChange={e=>setForm({...form, email: e.target.value})}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             class="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            
           />
           <div id="emailHelp" class="form-text">
             ایمیل شما محرمانه خواهد ماند
@@ -100,34 +102,46 @@ function isEmail(val) {
             رشته ی تحصیلی: &nbsp;
           </label>
           <input
-            onChange={e=>setForm({...form, major: e.target.value})}
-            type="text" class="form-control" id="exampleInputEmail1" />
+            onChange={(e) => setForm({ ...form, major: e.target.value })}
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+          />
         </div>
+
+        <label className="mt-3  d-flex justify-content-center align-items-baseline  ">
+          تحصیلات: &nbsp;
+          <select
+            onChange={(e) => setForm({ ...form, knowledge: e.target.value })}
+            name="education"
+            className="mx-2 form-select"
+          >
+            <option value="diploma">دیپلم</option>
+            <option value="bachelors">کارشناسی</option>
+            <option value="masters">ارشد</option>
+            <option value="phd">دکتری</option>
+          </select>
+        </label>
         <div class=" my-3 form-check " style={{ width: "50%" }}>
-          <input type="checkbox" class="form-check-input" id="exampleCheck1"
-          onChange={e=>setForm({...form, analizor: e.target.value})}
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="exampleCheck1"
+            onChange={(e) => setForm({ ...form, analizor: e.target.value })}
           />
           <label class="form-check-label  " for="exampleCheck1">
             سابقه تحلیل دارین
-          </label>
-          <label className="mt-3  d-flex justify-content-center align-items-baseline  ">
-            تحصیلات: &nbsp;
-            <select
-              onChange={e=>setForm({...form, knowledge: e.target.value})}
-              name="education" className="mx-2 form-select">
-              <option value="diploma">دیپلم</option>
-              <option value="bachelors">کارشناسی</option>
-              <option value="masters">ارشد</option>
-              <option value="phd">دکتری</option>
-            </select>
           </label>
           <div className="mb-3">
             <label for="exampleInputEmail1" class=" mx-2 form-label">
               چند سال ؟ &nbsp;
             </label>
             <input
-            onChange={e=>setForm({...form, experince: e.target.value})}
-              type="number" class="form-control" id="exampleInputEmail1" />
+              onChange={(e) => setForm({ ...form, experince: e.target.value })}
+              type="number"
+              class="form-control"
+              id="exampleInputEmail1"
+            />
           </div>
           <div className="mb-3">با کدام یک از این مفاهیم آشنایی دارید؟</div>
           <div
@@ -136,7 +150,7 @@ function isEmail(val) {
           >
             <div className="form-check form-check-inline">
               <input
-                onChange={e=>setForm({...form, one: e.target.value})}
+                onChange={(e) => setForm({ ...form, one: e.target.value })}
                 className="form-check-input"
                 type="checkbox"
                 id="inlineCheckbox1"
@@ -148,7 +162,7 @@ function isEmail(val) {
             </div>
             <div className="form-check form-check-inline">
               <input
-                onChange={e=>setForm({...form, two: e.target.value})}
+                onChange={(e) => setForm({ ...form, two: e.target.value })}
                 class="form-check-input"
                 type="checkbox"
                 id="inlineCheckbox2"
@@ -160,7 +174,7 @@ function isEmail(val) {
             </div>
             <div className="form-check form-check-inline">
               <input
-                onChange={e=>setForm({...form, three: e.target.value})}
+                onChange={(e) => setForm({ ...form, three: e.target.value })}
                 className="form-check-input"
                 type="checkbox"
                 id="inlineCheckbox3"
@@ -176,17 +190,21 @@ function isEmail(val) {
       <div style={{ width: "100%" }} className="d-flex justify-content-center">
         <button
           type="submit"
-          
           onClick={onSubmit}
           className="my-3 btn btn-info btn-lg"
         >
-          {flag?
+          {flag ? (
             <>
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-  Loading...</>
-            
-            : "ثبت و ادامه"}
-
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Loading...
+            </>
+          ) : (
+            "ثبت و ادامه"
+          )}
         </button>
       </div>
     </div>
