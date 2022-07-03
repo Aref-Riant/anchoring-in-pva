@@ -240,11 +240,11 @@ function Test() {
           <input
             onChange={(e) => setGuess(e.target.value)}
             placeholder={`please enter your guess ${
-              timeRef.current < 239 ? `after ${239 - timeRef.current} sec` : ""
+              timeRef.current < 119 ? `after ${119 - timeRef.current} sec` : ""
             }`}
             class="form-control"
             type="number"
-            disabled={(timeRef.current > 239 ? false : true)}
+            disabled={(timeRef.current > 119 ? false : true)}
           />
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -253,7 +253,7 @@ function Test() {
             className="btn btn-primary btn-lg"
             type="submit"
             onClick={onSubmit}
-            disabled={(timeRef.current > 239 ? false : true)}
+            disabled={(timeRef.current > 119 ? false : true)}
           />
         </div>
         <br />
