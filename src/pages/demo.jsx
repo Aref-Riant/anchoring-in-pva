@@ -39,30 +39,30 @@ function Demo() {
       duration: 50,
     },
   };
-  const onSubmit = () => {
-    var data = JSON.stringify({
-      guess: guess,
-      guess_time: rangeval,
-    });
+  // const onSubmit = () => {
+  //   var data = JSON.stringify({
+  //     guess: guess,
+  //     guess_time: rangeval,
+  //   });
 
-    var config = {
-      method: "post",
-      url: "http://217.182.11.251/testresult/",
-      headers: {
-        email: cookies.get("userEmail"),
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
+  //   var config = {
+  //     method: "post",
+  //     url: "http://217.182.11.251/testresult/",
+  //     headers: {
+  //       email: cookies.get("userEmail"),
+  //       "Content-Type": "application/json",
+  //     },
+  //     data: data,
+  //   };
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  //   axios(config)
+  //     .then(function (response) {
+  //       console.log(JSON.stringify(response.data));
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
 
   useEffect(() => {
     var config = {
@@ -252,12 +252,16 @@ function Demo() {
             name="Submit"
             className="btn btn-primary btn-lg"
             type="submit"
-            onClick={onSubmit}
+            // onClick={onSubmit}
             disabled={!train ? (timeRef.current > 239 ? false : true) : true}
           />
         </div>
         <br />
-        <button type="button" class="btn btn-outline-primary my-2">
+        <button type="button" class="btn btn-outline-primary my-2" onClick={() => {
+          window.location.href = "/test";
+        }}
+        disabled={(timeRef.current >= 120 ? false : true)}
+        >
           شروع آزمون
         </button>
         
