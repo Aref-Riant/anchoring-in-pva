@@ -85,6 +85,7 @@ function Demo() {
         setTrain(response.data.train);
         //setTrain(true);
         setTime(response.data.train ? 2 : 6);
+        setTrainText(response.data.traintext);
         //setTime(2);
         console.log(response.data);
         setFlag(!flag);
@@ -114,6 +115,8 @@ function Demo() {
   ]);
 
   const [time, setTime] = useState(6);
+  const [trainText, setTrainText] = useState("");
+
   const [stopTimer, setStopTimer] = useState(false);
   const [flag, setFlag] = useState(true);
   const intervalRef = useRef();
@@ -270,18 +273,11 @@ function Demo() {
         className="intro"
         style={{ width: "100vw", display: "flex", justifyContent: "center" }}
       >
-        {train ? (
-          <h5>trian show </h5>
-        ) : (
+        
           <h5>
-            در این آزمون, داده های یک رای گیری فرضی 6 دقیقه ای بر روی نمودار
-            مشاهده خواهد شد هر 6 ثانیه, مجموع آرای اخذ شده تا آن لحظه بر روی
-            نمودار و باکس گوشه بالا سمت راست نمودار نمایش داده خواهد شده از شرکت
-            کننده خواسته میشود تا قبل از گذر 4 دقیقه از رای گیری, از داده های
-            مشاهده شده مجموع تعداد آرا را تخمین زده و در جعبه سمت راست وارد
-            نماید.
+          {trainText}
           </h5>
-        )}
+        
       </div>
     </div>
   );
