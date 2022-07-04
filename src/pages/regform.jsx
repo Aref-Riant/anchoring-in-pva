@@ -130,7 +130,7 @@ function isEmail(val) {
             onChange={(e) => setForm({ ...form, analizor: e.target.value })}
           />
           <label class="form-check-label  " for="exampleCheck1">
-            سابقه تحلیل دارین
+            سابقه تحلیل داده دارید؟
           </label>
           <div className="mb-3">
             <label for="exampleInputEmail1" class=" mx-2 form-label">
