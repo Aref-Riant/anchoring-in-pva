@@ -252,7 +252,7 @@ function Demo() {
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <input
-            name="Submit"
+            value="Submit"
             className="btn btn-primary btn-lg"
             type="submit"
             // onClick={onSubmit}
