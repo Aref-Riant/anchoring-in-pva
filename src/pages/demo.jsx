@@ -29,7 +29,7 @@ function Demo() {
     scales: {
       y: {
         min: 0,
-        max,
+        max:max+10,
         ticks: {
           stepSize: 10,
         },
@@ -98,6 +98,7 @@ function Demo() {
   useEffect(() => {
     //console.log("hhh");
     if (arr && arr.length > 0) {
+      console.log(arr.slice(rangeval, rangeval + 10));
       setVisibledata(arr.slice(rangeval, rangeval + 10));
     }
   }, [rangeval]);
@@ -152,6 +153,7 @@ function Demo() {
     };
   }, [flag]);
   // set useEffect and interval that genereate a list in 6 sec interval
+ console.log(rangeval, "rangeval", visibledata, "visibledata");
 
   // console.log(time);
   useEffect(() => {
@@ -189,6 +191,7 @@ function Demo() {
         <div className="votesbox">
           <div className="chart" style={train ? { flex: "50%" } : {}}>
             {/* <div>{cookies.get("userEmail")}</div> */}
+            <div className="timer" ref={timerElementRef} />
             <Line data={chartdata} options={options} />
           </div>
           <div className="votescount slider_position bg-info">
@@ -198,7 +201,10 @@ function Demo() {
         </div>
         <div className="introbox">
           <div className="sliderbox">
-            <div className="slider" style={train ? { display: "flex" } : {}}>
+            <div
+              className="slider"
+              style={train ? { display: "flex", justifyContent: "center" } : {}}
+            >
               {rangeval && (
                 <input
                   type="range"
@@ -207,13 +213,16 @@ function Demo() {
                   max="360"
                   onChange={(e) => {
                     if (e.target.value <= timeRef.current) {
+                      console.log("e", e.target.value);
                       setRangeval(e.target.value);
                       clearInterval(intervalRef.current);
                       setTimeout(() => {
                         console.log(e.target.value);
-                        setRangeval(timeRef.current);
+
+                        setRangeval(+(timeRef.current / time).toFixed());
                         setFlag(!flag);
-                      }, 4000);
+                        console.log(visibledata);
+                      }, 2000);
                     }
                   }}
                   className="slider"
@@ -227,9 +236,9 @@ function Demo() {
         </div>
       </div>
 
-      <div className="view2">
-        <div className="timer" ref={timerElementRef} />
-
+      <div className="view2 mt-3">
+        <br />
+        <br />
         <div>
           <button
             className="btn btn-secondary btn-lg mb-3"
@@ -245,7 +254,7 @@ function Demo() {
             placeholder={`please enter your guess ${
               timeRef.current < 119 ? `after ${119 - timeRef.current} sec` : ""
             }`}
-            class="form-control"
+            className="form-control"
             type="number"
             disabled={!train ? (timeRef.current > 119 ? false : true) : true}
           />
@@ -260,24 +269,22 @@ function Demo() {
           />
         </div>
         <br />
-        <button type="button" class="btn btn-outline-primary my-2" onClick={() => {
-          window.location.href = "/test";
-        }}
-        disabled={(timeRef.current >= 120 ? false : true)}
+        <button
+          type="button"
+          className="btn btn-outline-primary my-2"
+          onClick={() => {
+            window.location.href = "/test";
+          }}
+          disabled={timeRef.current >= 120 ? false : true}
         >
           شروع آزمون
         </button>
-        
       </div>
       <div
         className="intro"
         style={{ width: "100vw", display: "flex", justifyContent: "center" }}
       >
-        
-          <h5>
-          {trainText}
-          </h5>
-        
+        <h5>{trainText}</h5>
       </div>
     </div>
   );

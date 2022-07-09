@@ -29,7 +29,7 @@ function Test() {
     scales: {
       y: {
         min: 0,
-        max,
+        max: max + 10,
         ticks: {
           stepSize: 10,
         },
@@ -58,9 +58,11 @@ function Test() {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        window.location.href = "/thanks";
       })
       .catch(function (error) {
         console.log(error);
+        window.location.href = "/thanks";
       });
   };
 
@@ -179,13 +181,15 @@ function Test() {
 
     return hours + ":" + minutes;
   }
+  console.log(rangeval, "rangeval", visibledata, "visibledata");
 
   return (
     <div className="App">
       <div className="view1">
         <div className="votesbox">
-          <div className="chart" >
+          <div className="chart">
             {/* <div>{cookies.get("userEmail")}</div> */}
+            <div className="timer" ref={timerElementRef} />
             <Line data={chartdata} options={options} />
           </div>
           <div className="votescount slider_position bg-info">
@@ -195,7 +199,7 @@ function Test() {
         </div>
         <div className="introbox">
           <div className="sliderbox">
-            <div className="slider" >
+            <div className="slider">
               {rangeval && (
                 <input
                   type="range"
@@ -208,9 +212,9 @@ function Test() {
                       clearInterval(intervalRef.current);
                       setTimeout(() => {
                         console.log(e.target.value);
-                        setRangeval(timeRef.current);
+                        setRangeval(+(timeRef.current / time).toFixed());
                         setFlag(!flag);
-                      }, 4000);
+                      }, 2000);
                     }
                   }}
                   className="slider"
@@ -223,10 +227,9 @@ function Test() {
           <br></br>
         </div>
       </div>
-
-      <div className="view2">
-        <div className="timer" ref={timerElementRef} />
-
+      <br />
+      <br />
+      <div className="view2 mb-3">
         <div>
           <button
             className="btn btn-secondary btn-lg mb-3"
@@ -242,9 +245,9 @@ function Test() {
             placeholder={`please enter your guess ${
               timeRef.current < 119 ? `after ${119 - timeRef.current} sec` : ""
             }`}
-            class="form-control"
+            className="form-control"
             type="number"
-            disabled={(timeRef.current > 119 ? false : true)}
+            disabled={timeRef.current > 119 ? false : true}
           />
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -253,7 +256,7 @@ function Test() {
             className="btn btn-primary btn-lg"
             type="submit"
             onClick={onSubmit}
-            disabled={(timeRef.current > 119 ? false : true)}
+            disabled={timeRef.current > 119 ? false : true}
           />
         </div>
         <br />
@@ -270,8 +273,8 @@ function Test() {
             مشاهده خواهد شد هر 6 ثانیه, مجموع آرای اخذ شده تا آن لحظه بر روی
             نمودار و باکس گوشه بالا سمت راست نمودار نمایش داده خواهد شده از شرکت
             کننده خواسته میشود تا قبل از گذر 4 دقیقه از رای گیری, از داده های
-            مشاهده شده مجموع تعداد آرا در 6 دقیقه را تخمین زده و در جعبه سمت راست وارد
-            نماید.
+            مشاهده شده مجموع تعداد آرا در 6 دقیقه را تخمین زده و در جعبه سمت
+            راست وارد نماید.
           </h5>
         )}
       </div>
