@@ -117,7 +117,7 @@ function Demo() {
 
   const [time, setTime] = useState(6);
   const [trainText, setTrainText] = useState("");
-
+  const [flag2, setFlag2] = useState(false);
   const [stopTimer, setStopTimer] = useState(false);
   const [flag, setFlag] = useState(true);
   const intervalRef = useRef();
@@ -202,23 +202,28 @@ function Demo() {
         <div className="introbox">
           <div className="sliderbox">
             <div
-              className="slider"
+              className="slider d-flex justify-content-center align-items-center"
               style={train ? { display: "flex", justifyContent: "center" } : {}}
             >
-              {rangeval && (
+              <span style={{ fontSize: 18 }}>
+                {flag2 && time_convert(rangeval*time)}
+              </span>
+              {rangeval > 0 && (
                 <input
                   type="range"
                   min="1"
                   step="1"
                   max="360"
+                 
                   onChange={(e) => {
                     if (e.target.value <= timeRef.current) {
                       console.log("e", e.target.value);
                       setRangeval(e.target.value);
                       clearInterval(intervalRef.current);
+                      setFlag2(true);
                       setTimeout(() => {
                         console.log(e.target.value);
-
+                        setFlag2(false);
                         setRangeval(+(timeRef.current / time).toFixed());
                         setFlag(!flag);
                         console.log(visibledata);

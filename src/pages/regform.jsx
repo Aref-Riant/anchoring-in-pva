@@ -70,41 +70,41 @@ function isEmail(val) {
       className="regform container border d-flex flex-column align-items-center justify-content-center my-3 
         shadow-lg p-3 mb-5 bg-body rounded"
     >
-      <form class="my-3 mx-1 formClass">
-        <div class="my-3 ">
-          <label for="exampleInputEmail1" class="form-label">
+      <form className="my-3 mx-1 formClass">
+        <div className="my-3 ">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             نام و نام خانوادگی: &nbsp;
           </label>
           <input
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             type="text"
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
           />
         </div>
-        <div class="mb-3">
-          <label for="name" class="form-label">
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">
             ادرس ایمیل
           </label>
           <input
             type="email"
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
           />
-          <div id="emailHelp" class="form-text">
+          <div id="emailHelp" className="form-text">
             ایمیل شما محرمانه خواهد ماند
           </div>
         </div>
-        <div class="my-3 ">
-          <label for="exampleInputEmail1" class="form-label">
+        <div className="my-3 ">
+          <label htmlFor="exampleInputEmail1" className="form-label">
             رشته ی تحصیلی: &nbsp;
           </label>
           <input
             onChange={(e) => setForm({ ...form, major: e.target.value })}
             type="text"
-            class="form-control"
+            className="form-control"
             id="exampleInputEmail1"
           />
         </div>
@@ -122,24 +122,24 @@ function isEmail(val) {
             <option value="phd">دکتری</option>
           </select>
         </label>
-        <div class=" my-3 form-check " style={{ width: "50%" }}>
+        <div className=" my-3 form-check " style={{ width: "50%" }}>
           <input
             type="checkbox"
-            class="form-check-input"
+            className="form-check-input"
             id="exampleCheck1"
             onChange={(e) => setForm({ ...form, analizor: e.target.value })}
           />
-          <label class="form-check-label  " for="exampleCheck1">
+          <label className="form-check-label  " htmlFor="exampleCheck1">
             سابقه تحلیل داده دارید؟
           </label>
           <div className="mb-3">
-            <label for="exampleInputEmail1" class=" mx-2 form-label">
+            <label htmlFor="exampleInputEmail1" className=" mx-2 form-label">
               چند سال ؟ &nbsp;
             </label>
             <input
               onChange={(e) => setForm({ ...form, experince: e.target.value })}
               type="number"
-              class="form-control"
+              className="form-control"
               id="exampleInputEmail1"
             />
           </div>
@@ -156,19 +156,19 @@ function isEmail(val) {
                 id="inlineCheckbox1"
                 value="option1"
               />
-              <label className="form-check-label" for="inlineCheckbox1">
+              <label className="form-check-label" htmlFor="inlineCheckbox1">
                 رگرسیون
               </label>
             </div>
             <div className="form-check form-check-inline">
               <input
                 onChange={(e) => setForm({ ...form, two: e.target.value })}
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 id="inlineCheckbox2"
                 value="option2"
               />
-              <label className="form-check-label" for="inlineCheckbox2">
+              <label className="form-check-label" htmlFor="inlineCheckbox2">
                 میانگین هندسی
               </label>
             </div>
@@ -180,7 +180,7 @@ function isEmail(val) {
                 id="inlineCheckbox3"
                 value="option3"
               />
-              <label className="form-check-label" for="inlineCheckbox3">
+              <label className="form-check-label" htmlFor="inlineCheckbox3">
                 همبستگی پیرسون
               </label>
             </div>
@@ -196,7 +196,7 @@ function isEmail(val) {
           {flag ? (
             <>
               <span
-                class="spinner-border spinner-border-sm"
+                className="spinner-border spinner-border-sm"
                 role="status"
                 aria-hidden="true"
               ></span>

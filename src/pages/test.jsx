@@ -16,6 +16,7 @@ import axios from "axios";
 function Test() {
   const [rangeval, setRangeval] = useState(0);
   const [flag1, setFlag1] = useState(false);
+  const [flag2, setFlag2] = useState(false);
   const [train, setTrain] = useState(false);
   //const visibledata = arr.slice(rangeval, rangeval + 10);
   const [visibledata, setVisibledata] = useState([]);
@@ -199,8 +200,9 @@ function Test() {
         </div>
         <div className="introbox">
           <div className="sliderbox">
-            <div className="slider">
-              {rangeval && (
+            <div className="slider d-flex justify-content-center">
+              <span style={{ fontSize: 18 }}>{flag2 && time_convert(rangeval*time)}</span>
+              {rangeval > 0 && (
                 <input
                   type="range"
                   min="1"
@@ -210,10 +212,12 @@ function Test() {
                     if (e.target.value <= timeRef.current) {
                       setRangeval(e.target.value);
                       clearInterval(intervalRef.current);
+                      setFlag2(true);
                       setTimeout(() => {
                         console.log(e.target.value);
                         setRangeval(+(timeRef.current / time).toFixed());
                         setFlag(!flag);
+                        setFlag2(false);
                       }, 2000);
                     }
                   }}

@@ -24,25 +24,25 @@ function Training() {
   const [rangeval, setRangeval] = useState(null);
   return (
     <div className="App">
-      <div class="view1">
-      <div class="votesbox">
-      <div class="chart">
+      <div className="view1">
+      <div className="votesbox">
+      <div className="chart">
           <Line data={data} />
       </div>
-      <div class="votescount">
+      <div className="votescount">
         250
       </div>
       </div>
-      <div class="introbox">
-      <div class="sliderbox">
-        <div class="slider">
+      <div className="introbox">
+      <div className="sliderbox">
+        <div className="slider">
       <input type="range" min="1" step="1" max="100" 
       onChange={(event) => setRangeval(event.target.value)}
-      class="slider" id="myRange" />
+      className="slider" id="myRange" />
       </div>
       </div>
       <br></br>
-      <div class="intro">
+      <div className="intro">
         <h5>
           سوگیری شناختی لنگر:
           در این سوگیری شناختی, داده های اولیه, تصمیم گیری کاربر را در مورد کل داده ها تحت تاثیر قرار میدهد
@@ -53,19 +53,19 @@ function Training() {
       </div>
       </div>
 
-      <div class="view2">
-        <div class="timer">
+      <div className="view2">
+        <div className="timer">
           03:01
         </div>
         <div className="stop-btn">
           <button disabled>Stop</button>
         </div>
-        <div class="guess-input">
+        <div className="guess-input">
           <input type="text" pattern="[0-9]*" disabled />
           <input type="submit" disabled />
         </div>
         
-        <a href="/3" class="button">شروع آزمون</a>
+        <a href="/3" className="button">شروع آزمون</a>
 
       </div>
 
