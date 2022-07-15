@@ -188,7 +188,7 @@ function Demo() {
   return (
     <div className="App">
       <div className="view1">
-        <div className="votesbox">
+        <div className="votesbox" style={{ height: "70vh" }}>
           <div className="chart" style={train ? { flex: "50%" } : {}}>
             {/* <div>{cookies.get("userEmail")}</div> */}
             <div className="timer" ref={timerElementRef} />
@@ -205,16 +205,12 @@ function Demo() {
               className="slider d-flex justify-content-center align-items-center"
               style={train ? { display: "flex", justifyContent: "center" } : {}}
             >
-              <span style={{ fontSize: 18 }}>
-                {flag2 && time_convert(rangeval*time)}
-              </span>
               {rangeval > 0 && (
                 <input
                   type="range"
                   min="1"
                   step="1"
                   max="360"
-                 
                   onChange={(e) => {
                     if (e.target.value <= timeRef.current) {
                       console.log("e", e.target.value);
@@ -236,7 +232,19 @@ function Demo() {
                 />
               )}
             </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "80%",
+              }}
+            >
+              <span style={{ fontSize: 18 }}>
+                {flag2 && time_convert(rangeval * time)}
+              </span>
+            </div>
           </div>
+
           <br></br>
         </div>
       </div>

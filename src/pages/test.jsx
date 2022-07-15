@@ -187,7 +187,7 @@ function Test() {
   return (
     <div className="App">
       <div className="view1">
-        <div className="votesbox">
+        <div className="votesbox" style={{height:"70vh"}}>
           <div className="chart">
             {/* <div>{cookies.get("userEmail")}</div> */}
             <div className="timer" ref={timerElementRef} />
@@ -200,8 +200,9 @@ function Test() {
         </div>
         <div className="introbox">
           <div className="sliderbox">
+            
+
             <div className="slider d-flex justify-content-center">
-              <span style={{ fontSize: 18 }}>{flag2 && time_convert(rangeval*time)}</span>
               {rangeval > 0 && (
                 <input
                   type="range"
@@ -226,6 +227,17 @@ function Test() {
                   value={rangeval}
                 />
               )}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: "80%",
+              }}
+            >
+              <span style={{ fontSize: 18 }}>
+                {flag2 && time_convert(rangeval * time)}
+              </span>
             </div>
           </div>
           <br></br>
