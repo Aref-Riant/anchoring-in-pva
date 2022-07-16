@@ -240,7 +240,7 @@ function Demo() {
               }}
             >
               <span style={{ fontSize: 18 }}>
-                {flag2 && time_convert(rangeval * time)}
+                { time_convert(rangeval * time)}
               </span>
             </div>
           </div>
