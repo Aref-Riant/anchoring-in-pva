@@ -29,7 +29,7 @@ function Demo() {
     scales: {
       y: {
         min: 0,
-        max:max+10,
+        max: max + 10,
         ticks: {
           stepSize: 10,
         },
@@ -84,7 +84,7 @@ function Demo() {
         );
         setTrain(response.data.train);
         //setTrain(true);
-        setTime(response.data.train ? 2 : 6);
+      
         setTrainText(response.data.traintext);
         //setTime(2);
         console.log(response.data);
@@ -115,7 +115,7 @@ function Demo() {
     "00:54",
   ]);
 
-  const [time, setTime] = useState(6);
+  const [time, setTime] = useState(2);
   const [trainText, setTrainText] = useState("");
   const [flag2, setFlag2] = useState(false);
   const [stopTimer, setStopTimer] = useState(false);
@@ -142,6 +142,7 @@ function Demo() {
       }
       timerElementRef.current.innerText = time_convert(timeRef.current);
       if (timeRef.current > 239) setStopTimer(true);
+      if (timeRef.current >=240) clearInterval(interval);
 
       // console.log(rangeval);
     }, 1000);
@@ -153,7 +154,7 @@ function Demo() {
     };
   }, [flag]);
   // set useEffect and interval that genereate a list in 6 sec interval
- console.log(rangeval, "rangeval", visibledata, "visibledata");
+  console.log(rangeval, "rangeval", visibledata, "visibledata");
 
   // console.log(time);
   useEffect(() => {
@@ -210,9 +211,14 @@ function Demo() {
                   type="range"
                   min="1"
                   step="1"
-                  max="360"
+                  max="90"
                   onChange={(e) => {
-                    if (e.target.value <= timeRef.current) {
+                    console.log(
+                      e.target.value,
+                      "e.target.value",
+                      timeRef.current
+                    );
+                    if (e.target.value <= timeRef.current / time) {
                       console.log("e", e.target.value);
                       setRangeval(e.target.value);
                       clearInterval(intervalRef.current);
@@ -221,7 +227,8 @@ function Demo() {
                         console.log(e.target.value);
                         setFlag2(false);
                         setRangeval(+(timeRef.current / time).toFixed());
-                        setFlag(!flag);
+                        if (timeRef.current < 239) setFlag(!flag);
+
                         console.log(visibledata);
                       }, 2000);
                     }
@@ -240,7 +247,7 @@ function Demo() {
               }}
             >
               <span style={{ fontSize: 18 }}>
-                { time_convert(rangeval * time)}
+                {time_convert(rangeval * time)}
               </span>
             </div>
           </div>

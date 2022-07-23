@@ -129,7 +129,7 @@ function Test() {
       //set label state to 6 sec more than before
 
       if (timeRef.current % time === 0) {
-        //console.log(time, "tiem");
+        console.log(time, "tiem");
         temp = temp.slice(1);
         //console.log(temp);
         temp.push(time_convert(timeRef.current + 54));
@@ -141,7 +141,7 @@ function Test() {
       }
       timerElementRef.current.innerText = time_convert(timeRef.current);
       if (timeRef.current > 239) setStopTimer(true);
-
+      if (timeRef.current >= 240) clearInterval(interval);
       // console.log(rangeval);
     }, 1000);
     intervalRef.current = interval;
@@ -187,7 +187,7 @@ function Test() {
   return (
     <div className="App">
       <div className="view1">
-        <div className="votesbox" style={{height:"70vh"}}>
+        <div className="votesbox" style={{ height: "70vh" }}>
           <div className="chart">
             {/* <div>{cookies.get("userEmail")}</div> */}
             <div className="timer" ref={timerElementRef} />
@@ -200,24 +200,23 @@ function Test() {
         </div>
         <div className="introbox">
           <div className="sliderbox">
-            
-
             <div className="slider d-flex justify-content-center">
               {rangeval > 0 && (
                 <input
                   type="range"
                   min="1"
                   step="1"
-                  max="360"
+                  max="60"
                   onChange={(e) => {
-                    if (e.target.value <= timeRef.current) {
+                    console.log(e.target.value, "e.target.value");
+                    if (e.target.value / time <= timeRef.current / time) {
                       setRangeval(e.target.value);
                       clearInterval(intervalRef.current);
                       setFlag2(true);
                       setTimeout(() => {
                         console.log(e.target.value);
                         setRangeval(+(timeRef.current / time).toFixed());
-                        setFlag(!flag);
+                        if (timeRef.current < 239) setFlag(!flag);
                         setFlag2(false);
                       }, 2000);
                     }
