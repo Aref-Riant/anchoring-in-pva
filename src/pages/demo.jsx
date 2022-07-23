@@ -18,13 +18,14 @@ function Demo() {
   const [flag1, setFlag1] = useState(false);
   const [train, setTrain] = useState(false);
   //const visibledata = arr.slice(rangeval, rangeval + 10);
-  const [visibledata, setVisibledata] = useState([]);
+  const [visibledata, setVisibledata] = useState([0]);
   const [guess, setGuess] = useState(0);
   const timeRef = useRef(0);
   const timerElementRef = useRef();
   const cookies = new Cookies();
   const [arr, setArr] = useState();
   const [max, setMax] = useState(150);
+  const [end, setEnd] = useState(0);
   const options = {
     scales: {
       y: {
@@ -98,8 +99,28 @@ function Demo() {
   useEffect(() => {
     //console.log("hhh");
     if (arr && arr.length > 0) {
-      console.log(arr.slice(rangeval, rangeval + 10));
-      setVisibledata(arr.slice(rangeval, rangeval + 10));
+  
+      let temp = label;
+      if (rangeval < 10)
+      {
+        console.log(
+          arr.slice(0, 2).concat(new Array(10 - rangeval).fill(0)),
+          "slice",
+          10 - rangeval
+        );
+        setVisibledata(arr.slice(0, rangeval).concat(new Array(10 - rangeval).fill(0)));
+        setEnd(arr[rangeval])
+      } 
+      else {
+        temp = temp.slice(1);
+        //console.log(temp);
+        temp.push(time_convert(timeRef.current + 54));
+        setLabel(temp);
+        setVisibledata(arr.slice(rangeval-9, rangeval+1 ));
+       if (visibledata.length===10) setEnd(visibledata[visibledata.length - 1]);
+        
+        
+      }
     }
   }, [rangeval]);
   const [label, setLabel] = useState([
@@ -123,7 +144,7 @@ function Demo() {
   const intervalRef = useRef();
   useEffect(() => {
     // render time
-    let temp = label;
+    
     const interval = setInterval(() => {
       timeRef.current += 1;
       //display new time
@@ -131,18 +152,15 @@ function Demo() {
 
       if (timeRef.current % time === 0) {
         //console.log(time, "tiem");
-        temp = temp.slice(1);
-        //console.log(temp);
-        temp.push(time_convert(timeRef.current + 54));
-        setLabel(temp);
+        
         // console.log(temp, timeRef.current);
         if (timeRef.current < 241) {
           setRangeval((prev) => prev + 1);
         }
       }
       timerElementRef.current.innerText = time_convert(timeRef.current);
-      if (timeRef.current > 239) setStopTimer(true);
-      if (timeRef.current >=240) clearInterval(interval);
+      
+      if (timeRef.current >=120||visibledata.length===0) clearInterval(interval);
 
       // console.log(rangeval);
     }, 1000);
@@ -197,7 +215,7 @@ function Demo() {
           </div>
           <div className="votescount slider_position bg-info">
             last count: &nbsp;
-            {visibledata[visibledata.length - 1]}
+            {end}
           </div>
         </div>
         <div className="introbox">
@@ -272,11 +290,11 @@ function Demo() {
           <input
             onChange={(e) => setGuess(e.target.value)}
             placeholder={`please enter your guess ${
-              timeRef.current < 119 ? `after ${119 - timeRef.current} sec` : ""
+              timeRef.current < 60 ? `after ${60 - timeRef.current} sec` : ""
             }`}
             className="form-control"
             type="number"
-            disabled={!train ? (timeRef.current > 119 ? false : true) : true}
+            disabled={(timeRef.current > 60 ? false : true) }
           />
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -285,7 +303,7 @@ function Demo() {
             className="btn btn-primary btn-lg"
             type="submit"
             // onClick={onSubmit}
-            disabled={!train ? (timeRef.current > 119 ? false : true) : true}
+            disabled={ (timeRef.current > 60 ? false : true) }
           />
         </div>
         <br />
@@ -295,7 +313,7 @@ function Demo() {
           onClick={() => {
             window.location.href = "/test";
           }}
-          disabled={timeRef.current >= 120 ? false : true}
+          disabled={timeRef.current >= 70 ? false : true}
         >
           شروع آزمون
         </button>

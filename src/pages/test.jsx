@@ -19,7 +19,7 @@ function Test() {
   const [flag2, setFlag2] = useState(false);
   const [train, setTrain] = useState(false);
   //const visibledata = arr.slice(rangeval, rangeval + 10);
-  const [visibledata, setVisibledata] = useState([]);
+  const [visibledata, setVisibledata] = useState([0]);
   const [guess, setGuess] = useState(0);
   const timeRef = useRef(0);
   const timerElementRef = useRef();
@@ -100,7 +100,25 @@ function Test() {
   useEffect(() => {
     //console.log("hhh");
     if (arr && arr.length > 0) {
-      setVisibledata(arr.slice(rangeval, rangeval + 10));
+      let temp = label;
+      if (rangeval < 10) {
+        console.log(
+          arr.slice(0, 2).concat(new Array(10 - rangeval).fill(0)),
+          "slice",
+          10 - rangeval
+        );
+        setVisibledata(
+          arr.slice(0, rangeval).concat(new Array(10 - rangeval).fill(0))
+        );
+        setEnd(arr[rangeval ]);
+      } else {
+        temp = temp.slice(1);
+        //console.log(temp);
+        temp.push(time_convert(timeRef.current + 54));
+        setLabel(temp);
+        setVisibledata(arr.slice(rangeval - 9, rangeval + 1));
+        if (visibledata.length === 10) setEnd(visibledata[visibledata.length - 1]);
+      }
     }
   }, [rangeval]);
   const [label, setLabel] = useState([
@@ -119,6 +137,7 @@ function Test() {
   const [time, setTime] = useState(6);
   const [stopTimer, setStopTimer] = useState(false);
   const [flag, setFlag] = useState(true);
+  const [end, setEnd] = useState(0);
   const intervalRef = useRef();
   useEffect(() => {
     // render time
@@ -130,10 +149,9 @@ function Test() {
 
       if (timeRef.current % time === 0) {
         console.log(time, "tiem");
-        temp = temp.slice(1);
+       
         //console.log(temp);
-        temp.push(time_convert(timeRef.current + 54));
-        setLabel(temp);
+      
         // console.log(temp, timeRef.current);
         if (timeRef.current < 241) {
           setRangeval((prev) => prev + 1);
@@ -141,7 +159,8 @@ function Test() {
       }
       timerElementRef.current.innerText = time_convert(timeRef.current);
       if (timeRef.current > 239) setStopTimer(true);
-      if (timeRef.current >= 240) clearInterval(interval);
+      if (timeRef.current >= 240 || visibledata.length === 0)
+        clearInterval(interval);
       // console.log(rangeval);
     }, 1000);
     intervalRef.current = interval;
@@ -195,7 +214,8 @@ function Test() {
           </div>
           <div className="votescount slider_position bg-info">
             last count: &nbsp;
-            {visibledata[visibledata.length - 1]}
+          
+            {end}
           </div>
         </div>
         <div className="introbox">
@@ -258,11 +278,11 @@ function Test() {
           <input
             onChange={(e) => setGuess(e.target.value)}
             placeholder={`please enter your guess ${
-              timeRef.current < 119 ? `after ${119 - timeRef.current} sec` : ""
+              timeRef.current < 240 ? `after ${240 - timeRef.current} sec` : ""
             }`}
             className="form-control"
             type="number"
-            disabled={timeRef.current > 119 ? false : true}
+            disabled={timeRef.current > 239 ? false : true}
           />
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -271,7 +291,7 @@ function Test() {
             className="btn btn-primary btn-lg"
             type="submit"
             onClick={onSubmit}
-            disabled={timeRef.current > 119 ? false : true}
+            disabled={timeRef.current > 238 ? false : true}
           />
         </div>
         <br />
