@@ -109,15 +109,16 @@ function Demo() {
           10 - rangeval
         );
         setVisibledata(arr.slice(0, rangeval).concat(new Array(10 - rangeval).fill(0)));
-        setEnd(arr[rangeval])
+        setEnd(arr[rangeval-1])
       } 
       else {
         temp = temp.slice(1);
         //console.log(temp);
-        temp.push(time_convert(timeRef.current + 54));
+        temp.push(time_convert(timeRef.current*3 ));
         setLabel(temp);
         setVisibledata(arr.slice(rangeval-9, rangeval+1 ));
-       if (visibledata.length===10) setEnd(visibledata[visibledata.length - 1]);
+        if (visibledata.length === 10) setEnd(visibledata[visibledata.length - 1]);
+        if (visibledata.includes(arr[arr.length-1])) setStopTimer(true)
         
         
       }
@@ -289,12 +290,10 @@ function Demo() {
         <div className="guess-input my-1">
           <input
             onChange={(e) => setGuess(e.target.value)}
-            placeholder={`please enter your guess ${
-              timeRef.current < 60 ? `after ${60 - timeRef.current} sec` : ""
-            }`}
+           
             className="form-control"
             type="number"
-            disabled={(timeRef.current > 60 ? false : true) }
+            disabled={ true}
           />
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -303,7 +302,7 @@ function Demo() {
             className="btn btn-primary btn-lg"
             type="submit"
             // onClick={onSubmit}
-            disabled={ (timeRef.current > 60 ? false : true) }
+            disabled={  true}
           />
         </div>
         <br />

@@ -108,16 +108,17 @@ function Test() {
           10 - rangeval
         );
         setVisibledata(
-          arr.slice(0, rangeval).concat(new Array(10 - rangeval).fill(0))
+          arr.slice(0, rangeval+1).concat(new Array(10 - rangeval).fill(0))
         );
         setEnd(arr[rangeval ]);
       } else {
         temp = temp.slice(1);
         //console.log(temp);
-        temp.push(time_convert(timeRef.current + 54));
+        temp.push(time_convert(timeRef.current  ));
         setLabel(temp);
         setVisibledata(arr.slice(rangeval - 9, rangeval + 1));
         if (visibledata.length === 10) setEnd(visibledata[visibledata.length - 1]);
+        if (visibledata.includes(arr[arr.length - 1])) setStopTimer(true);
       }
     }
   }, [rangeval]);
