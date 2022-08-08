@@ -84,7 +84,7 @@ function isEmail(val) {
         </div>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
-            ادرس ایمیل
+             *ضروری ادرس ایمیل
           </label>
           <input
             type="email"
